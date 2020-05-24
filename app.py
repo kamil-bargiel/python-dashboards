@@ -2,10 +2,12 @@
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
+import flask
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+server = flask.Flask(__name__)
+app = dash.Dash(__name__, external_stylesheets=external_stylesheets, server=server)
 
 app.layout = html.Div(children=[
     html.H1(children='Hello Dash'),
@@ -29,4 +31,4 @@ app.layout = html.Div(children=[
 ])
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.server.run(debug=True, threaded=True)
