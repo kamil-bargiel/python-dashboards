@@ -33,9 +33,9 @@ country_df.sort_values(by='Confirmed', ascending=False, inplace=True)
 
 navbar = dbc.NavbarSimple(
     children=[
+        dbc.NavItem(html.A("Summary", href="#summary", style = {'color': '#fff'}), className="mr-5"),
         dbc.NavItem(html.A("Daily Data", href="#nav-daily-graph", style = {'color': '#fff'}), className="mr-5"),
-        dbc.NavItem(html.A("Most effected", href="#nav-top-country-graph", style = {'color': '#fff'}), className="mr-5"),
-        dbc.NavItem(html.A("Comparison", href="#nav-cr-link", style = {'color': '#fff'}), className="mr-5"),
+        dbc.NavItem(html.A("Global map", href="#map-view", style = {'color': '#fff'}), className="mr-5"),
     ],
     brand="kbargiel COVID-19 dashboard",
     brand_href="/",
@@ -46,7 +46,7 @@ navbar = dbc.NavbarSimple(
 
 world_tally = dbc.Container(
     [
-        html.H2('World Data - summary', style={'text-align': 'center', 'padding-top': '100px'}),
+        html.H2('World Data - summary', id='summary', style={'text-align': 'center', 'padding-top': '100px'}),
 
         dbc.Row(
             [
@@ -77,7 +77,7 @@ world_tally = dbc.Container(
 margin = country_df['Confirmed'].values.tolist()
 circle_range = interp1d([1, max(margin)], [0.2, 12])
 circle_radius = circle_range(margin)
-global_map_heading = html.H2(children='World map view', className='mt-5 py-4 pb-3 text-center')
+global_map_heading = html.H2(id='map-view', children='World map view', className='mt-5 py-4 pb-3 text-center')
 map_fig = px.scatter_mapbox(country_df, lat="Lat", lon="Long", hover_name="Country", hover_data=["Confirmed", "Deaths"],
                         color_discrete_sequence=["#e60039"], zoom=2, height=500, size_max=50, size=circle_radius)
 map_fig.update_layout(mapbox_style="open-street-map", margin={"r": 0, "t": 0, "l": 0, "b": 0}, height=520)
