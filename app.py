@@ -51,6 +51,7 @@ navbar = dbc.NavbarSimple(
         dbc.NavItem(html.A("Summary", href="#summary", style = {'color': '#fff'}), className="mr-5"),
         dbc.NavItem(html.A("Daily Data", href="#nav-daily-graph", style = {'color': '#fff'}), className="mr-5"),
         dbc.NavItem(html.A("Global map", href="#map-view", style = {'color': '#fff'}), className="mr-5"),
+        dbc.NavItem(html.A("Top 10 countries", href="#pie-view", style = {'color': '#fff'}), className="mr-5"),
     ],
     brand="kbargiel COVID-19 dashboard",
     brand_href="/",
