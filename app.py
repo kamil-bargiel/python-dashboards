@@ -31,6 +31,21 @@ recovered_df.drop('Province/State', axis=1, inplace=True)
 
 country_df.sort_values(by='Confirmed', ascending=False, inplace=True)
 
+pie_headings = html.H2(id='pie-view', className='mt-5 py-4 pb-3 text-center', children='Top 10 view')
+allDeaths = death_df[['Country', death_df.columns[-1]]]
+allConfirmed = confirmed_df[['Country', confirmed_df.columns[-1]]]
+allDeaths = allDeaths.sort_values(by=allDeaths.columns[1], ascending=False)
+allConfirmed = allConfirmed.sort_values(by=allConfirmed.columns[1], ascending=False)
+top10Deaths = allDeaths.head(10)
+top10Confirmed = allConfirmed.head(10)
+top10DeathsPie = px.pie(top10Deaths, values=allDeaths.columns[1], names='Country', title='Top 10 countries by number of deaths')
+top10ConfirmedPie = px.pie(top10Confirmed, values=allConfirmed.columns[1], names='Country', title='Top 10 countries by number of confirmed')
+top10ConfirmedPie.update_layout(title_x=0.5)
+top10DeathsPie.update_layout(title_x=0.5)
+
+
+
+
 navbar = dbc.NavbarSimple(
     children=[
         dbc.NavItem(html.A("Summary", href="#summary", style = {'color': '#fff'}), className="mr-5"),
@@ -130,19 +145,29 @@ app.layout = html.Div(
          dcc.Graph(
              id='global_graph',
              figure=map_fig
-         )
-        ]
-      ),
+         )]
+     ),
      dbc.Container([daily_graph_heading,
                     country_dropdown,
                     html.Div(id='country-total'),
                     dcc.Graph(
                         id='daily-graphs'
-                    )
-                    ]
-                   ),
+                    )]
+     ),
+     html.Div(children = [pie_headings,
+         dcc.Graph(
+             id='pie_chart1',
+             figure=top10DeathsPie
+         ),
+         dcc.Graph(
+             id='pie_chart2',
+             figure=top10ConfirmedPie
+         )
+        ]
+     ),
      ]
 )
+app.title = 'Covid-19 dashboard'
 
 if __name__ == '__main__':
     app.server.run(debug=True, threaded=True)
