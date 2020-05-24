@@ -26,7 +26,7 @@ death_df.drop('Province/State', axis=1, inplace=True)
 confirmed_df.drop('Province/State', axis=1, inplace=True)
 recovered_df.drop('Province/State', axis=1, inplace=True)
 
-country_df.sort_values('Confirmed', ascending=False, inplace=True)
+country_df.sort_values(by='Confirmed', ascending=False, inplace=True)
 
 navbar = dbc.NavbarSimple(
     children=[
